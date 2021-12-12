@@ -37,8 +37,8 @@ int main(){
             }
         }
     }
-
-	cout << dp[W];
+    
+    cout << dp[W];
 
     return 0;
 }
