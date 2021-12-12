@@ -14,7 +14,7 @@ reference: https://www.acmicpc.net/source/21446534
 바로 value = sums[idx] + weight이외에도 value_add = abs(sums[idx] - weight)를 추가하는 것이다.
 이를 통해 canPossible 함수가 필요 없게 되고 for문을 무의미하게 한번 더 실행할 필요가 없어진다.
 
-* set은 생각보다 빠르다...
+set은 생각보다 빠르다...
 """
 
 def findSums():
@@ -28,8 +28,9 @@ def findSums():
             sums.append(value_sub)
 
         sums.append(weight)
+        sums = list(set(sums))
     
-    return list(set(sums))
+    return sums
 
 num_weight = int(input())
 weights = list(map(int, input().split()))
