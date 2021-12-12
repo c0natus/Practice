@@ -8,31 +8,28 @@ weight_sums를 정렬한다.
 처음 생각할 때 주어진 구슬의 무게 + weight_sum[i] = weight_sum[j]일 때 i, j에 추가 중복으로
 사용될 경우 때문에 헷갈렸는데, 중복으로 사용된 경우에는 해당 추를 사용하지 않는 것과 같아서
 아무 문제가 없다.
-"""
 
-def canPossible(stuff):
-    if stuff in weight_sums:
-        return True
-    
-    for one_of_sums in weight_sums:
-        if stuff + one_of_sums in weight_sums:
-            return True
-    
-    return False
+findSums를 최적화 하는 방법이 있다.
+reference: https://www.acmicpc.net/source/21446534
+바로 value = sums[idx] + weight이외에도 value_add = abs(sums[idx] - weight)를 추가하는 것이다.
+이를 통해 canPossible 함수가 필요 없게 되고 for문을 무의미하게 한번 더 실행할 필요가 없어진다.
+
+* set은 생각보다 빠르다...
+"""
 
 def findSums():
     sums = []
     for weight in weights:
-        previous_sums_len = len(sums)
-        for idx in range(previous_sums_len):
-            value = sums[idx] + weight
-            if value not in sums:
-                sums.append(value)
-        
-        if weight not in sums:
-            sums.append(weight)
+        for idx in range(len(sums)):
+            value_add = sums[idx] + weight
+            value_sub = abs(sums[idx] - weight)
+            
+            sums.append(value_add)
+            sums.append(value_sub)
+
+        sums.append(weight)
     
-    return sums
+    return list(set(sums))
 
 num_weight = int(input())
 weights = list(map(int, input().split()))
@@ -40,17 +37,7 @@ weights = list(map(int, input().split()))
 num_stuff = int(input())
 stuffs = list(map(int, input().split()))
 
-max_sum = sum(weights)
 weight_sums = findSums()
 
-ans = [None] * num_stuff
-
-for idx in range(len(stuffs)):
-    if stuffs[idx] <= max_sum:
-        if canPossible(stuffs[idx]):
-            ans[idx] = 'Y'
-            continue
-    
-    ans[idx] = 'N'
-
-print(' '.join(ans))
+for stuff in stuffs:
+    print("Y" if stuff in weight_sums else "N", end=' ')
