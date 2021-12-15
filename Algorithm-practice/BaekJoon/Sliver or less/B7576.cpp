@@ -6,8 +6,8 @@ using namespace std;
 int COL, ROW;
 queue<pair<int, int>> location_one;
 
-int minDays(int **tomatos);
-bool zeroIsIn(int **tomatos);
+int minDays(int **tomatoes);
+bool zeroIsIn(int **tomatoes);
 
 int main(){
     ios_base::sync_with_stdio(false);
@@ -16,17 +16,17 @@ int main(){
     cin >> COL;
     cin >> ROW;
 
-    int **tomatos = new int*[ROW];
+    int **tomatoes = new int*[ROW];
 
     for(int i = 0; i < ROW; i++){
-        tomatos[i] = new int[COL];
+        tomatoes[i] = new int[COL];
     }
 
     for(int row = 0; row < ROW; row++){
         for(int col = 0; col < COL; col++){
-            cin >> tomatos[row][col];
+            cin >> tomatoes[row][col];
 
-            if (tomatos[row][col] == 1){
+            if (tomatoes[row][col] == 1){
                 location_one.push(pair<int, int>(row, col));
             }
         }
@@ -35,10 +35,10 @@ int main(){
     int answer = 0;
 
     if (!location_one.empty()){
-        answer = minDays(tomatos);
+        answer = minDays(tomatoes);
     }
 
-    if(zeroIsIn(tomatos)){
+    if(zeroIsIn(tomatoes)){
         cout << -1 << '\n';
     } else {
         cout << answer << '\n';
@@ -47,10 +47,10 @@ int main(){
     return 0;
 }
 
-bool zeroIsIn(int **tomatos){
+bool zeroIsIn(int **tomatoes){
     for(int row = 0; row < ROW; row++){
         for(int col = 0; col < COL; col++){
-            if (tomatos[row][col] == 0){
+            if (tomatoes[row][col] == 0){
                 return true;
             }
         }
@@ -58,7 +58,7 @@ bool zeroIsIn(int **tomatos){
     return false;
 }
 
-int minDays(int **tomatos){
+int minDays(int **tomatoes){
     int count = 0;
 
     // 상, 하, 좌, 우
@@ -79,9 +79,9 @@ int minDays(int **tomatos){
                 int tmp_row = row + move_x[i];
                 int tmp_col = col + move_y[i];
 
-                if(0 <= tmp_row && tmp_row < ROW && 0 <= tmp_col && tmp_col < COL && tomatos[tmp_row][tmp_col] == 0){
+                if(0 <= tmp_row && tmp_row < ROW && 0 <= tmp_col && tmp_col < COL && tomatoes[tmp_row][tmp_col] == 0){
                     tmp_queue.push(pair<int, int>(tmp_row, tmp_col));
-                    tomatos[tmp_row][tmp_col] = 1;
+                    tomatoes[tmp_row][tmp_col] = 1;
                 }
             }
         }
