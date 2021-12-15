@@ -28,11 +28,6 @@ def minDaysForRipe():
 
     answer = -1
 
-    # 상, 하, 좌, 우, 위, 아래
-    move_row = [0, 0, -1, 1, 0, 0]
-    move_col = [-1, 1, 0, 0, 0, 0]
-    move_height = [0, 0, 0, 0, -1, 1]
-
     while location_one:
 
         tmp_q = deque()
@@ -69,8 +64,15 @@ def minDaysForRipe():
 
 input = sys.stdin.readline
 COL, ROW, HEIGHT = map(int, input().split())
-# tomatoes = list(zip(*[iter(list(map(int, ll.split())) for ll in input)] * ROW))
 tomatoes = [[list(map(int, input().split())) for _ in range(ROW)] for _ in range(HEIGHT)]
+
+# 두개 모두 같은 결과...
+
+# input = sys.stdin.readlines
+# tomatoes = list(zip(*[iter(list(map(int, ll.split())) for ll in input)] * ROW))
+
+# input = sys.stdin.readline
+# tomatoes = [[[*(map(int, input().split()))] for _ in range(ROW)] for _ in range(HEIGHT)]
 
 zero_num, location_one = parsingTomatoes()
 
