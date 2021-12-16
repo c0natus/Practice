@@ -1,41 +1,47 @@
+"""
+기본적인 다익스트라 문제이다.
+다익스트라는 다이나믹 프로그래밍을 활용한 대표적인 최단 경로 탐색 알고리즘이다.
+하나의 최단 거리를 구할 때 그 이전까지 구했던 최단 거리 정보를 그대로 사용하기 때문이다.
+
+
+다익스트라는 시작점부터 각 정점들 까지의 최단 거리를 구할 수 있다.
+단 음의 간선을 포함할 수 없다.
+"""
+
 import sys
 import heapq
 
 input = sys.stdin.readline
 
-def dijkstra(start, INF):
-    heapq.heappush(h, (arr_cost[start], start))
+def djikstra(start_vertex):
+    costs[start_vertex] = 0
+    heap = []
+    heapq.heappush(heap, (costs[start_vertex], start_vertex))
 
-    while h:
-        cur = heapq.heappop(h)
-        cur_cost = cur[0]
-        cur_v = cur[1]
+    while heap:
+        cur_vertex = heapq.heappop(heap)[1]
+        for adj_v_c in adj[cur_vertex]:
+            adj_vertex = adj_v_c[0]
+            adj_weight = adj_v_c[1]
 
-        for adj_node in adj[cur_v]:
-            adj_v = adj_node[0]
-            adj_cost = adj_node[1]
-            tmp_route_cost = arr_cost[cur_v] + adj_cost
-            if arr_cost[adj_v] > tmp_route_cost:
-                arr_cost[adj_v] = tmp_route_cost
-                heapq.heappush(h, (arr_cost[adj_v], adj_v))
+            adj_cost = costs[cur_vertex] + adj_weight
+
+            if adj_cost < costs[adj_vertex] or costs[adj_vertex] == -1:
+                costs[adj_vertex] = adj_cost
+                heapq.heappush(heap, (costs[adj_vertex], adj_vertex))
 
 
 v, e = map(int, input().split())
-start = int(input())
+start_vertex = int(input())
 adj = [[] for _ in range(v+1)]
-
 for _ in range(e):
-    src, dst, cost = map(int, input().split())
-    adj[src].append([dst,cost])
+    src, dst, weight = map(int, input().split())
+    adj[src].append([dst, weight])
 
-INF = 3000000
-arr_cost = [INF] * (v+1)
-arr_cost[start] = 0
-h = []
-dijkstra(start, INF)
+costs = [-1] * (v+1)
+costs[start_vertex] = 0
 
-for i in range(1,v+1):
-    if arr_cost[i] == INF:
-        print('INF')
-    else:
-        print(arr_cost[i])
+djikstra(start_vertex)
+
+for idx in range(1, v+1):
+    print('INF') if costs[idx] == -1 else print(costs[idx])
