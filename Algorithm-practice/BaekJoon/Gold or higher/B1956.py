@@ -3,6 +3,9 @@ findMinCostPath에서 반복문을 줄여야한다.
 사이클의 찾는 것이기 때문에 end를 1부터할 필요 없이 start + 1부터 해주면 된다.
 
 그리고 python으로 하면 시간 초과가 나오므로 pypy로 제출하자.
+
+다익스트라로 풀면 python으로 통과한다....?
+reference: https://www.acmicpc.net/source/33177966
 """
 import sys
 
