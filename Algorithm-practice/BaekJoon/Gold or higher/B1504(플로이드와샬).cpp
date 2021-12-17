@@ -54,7 +54,7 @@ int main(){
         );
 
     if (min_path >= INF) cout << -1;
-	else cout << min_path;
+    else cout << min_path;
 
     return 0;
 }
