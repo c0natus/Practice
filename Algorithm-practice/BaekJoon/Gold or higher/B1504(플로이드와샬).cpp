@@ -66,7 +66,7 @@ void floydWarshall(int v){
         for(int start = 1; start <= v; start++){
             if (start == through) continue;
             for(int end = 1; end <= v; end++){
-                if (end == through) continue;
+                if (end == start) continue;
                 adj_costs[start][end] = min(
                     adj_costs[start][end], 
                     adj_costs[start][through] + adj_costs[through][end]
