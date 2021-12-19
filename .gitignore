@@ -1,2 +1,4 @@
 tmp.*
 .gitignore
+input.txt
+output.txt
